@@ -1,0 +1,384 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+    <title>Employee Dashboard</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+    <style type="text/css">
+        body
+        {
+            background-image: url("http://blog.heartland.org/wp-content/uploads/2013/08/Boeing-787-Dreamliner1-1.jpg");
+            background-size: cover;
+        }
+        #main
+        {
+            width: 1050px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            font-size: 14pt;
+        }
+        #header
+        {
+            text-align: center;
+            position: relative;
+            padding-bottom: 1px;
+        }
+        #userLogout
+        {
+            text-decoration: none;
+            color: #000;
+        }
+        #userLogout:hover
+        {
+            color: #888;
+        }
+        #menu
+        {
+            text-align: center;
+        }
+        .menuOption
+        {
+            display: inline;
+            border: 1px solid #000;
+            padding: 10px;
+            background-color: #1975FF;
+            border-radius: 5px;
+            color: #FFF;
+        }
+        .menuOption:hover
+        {
+            background-color: #4791FF;
+            cursor: pointer;
+            color: #000;
+        }
+        #menuItems
+        {
+            list-style: none;
+            padding: 0;
+        }
+        #welcome
+        {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        #userLogout
+        {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 14pt;
+        }
+        #contentArea
+        {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .required
+        {
+            font-style: bold;
+            color: #FF0000;
+            margin-right: 5px;
+        }
+        .registerSpacing
+        {
+            margin: 5px;
+        }
+        .login
+        {
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #1975FF;
+            margin-top: 10px;
+        }
+        
+        button
+        {
+            font-size: 16px;
+            color: #FFF;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        .login:hover
+        {
+            background-color: #4791FF;
+        }
+        
+        .hidden
+        {
+            display: none;
+        }
+        .empInfo
+        {
+            text-align: left;
+            padding: 5px;
+        }
+        .empInfoLabel
+        {
+            text-align: right;
+            padding: 5px;
+        }
+        table#einfo
+        {
+            margin: auto;
+        }
+        
+        .center
+        {
+            margin: auto;
+        }
+        .bold
+        {
+            font-weight: bold;
+        }
+        
+        .textAlignLeft
+        {
+            text-align: left;
+        }
+        .textAlignRight
+        {
+            text-align: right;
+        }
+        .redText
+        {
+            color: #FF0000;
+        }
+        #registerEmployee
+        {
+            width: 300px;
+            margin: auto;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="center">
+        <div id="header">
+            <h1>Employee Dashboard</h1>
+            <div id="welcome">
+                <span>Welcome, </span>
+                <span id="userName">Clark</span>
+            </div>
+            <div id="logout">
+                <a id="userLogout" href="Main Login Page.html">Logout</a>
+            </div>
+        </div>
+        <div id="menu">
+            <ul id="menuItems">
+                <li class="menuOption" id="ve">View contact info</li>
+                <li class="menuOption" id="ee">Edit contact info</li>
+            </ul>
+        </div>
+        <div id="contentArea">
+            <div id="viewEmployeeInfo" class="hidden">
+                <h2>Employee information</h2>
+                <table id="einfo">
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>First Name:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="efn" >Jane</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span >Middle Name:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="emn" >Smith</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>Last Name:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="eln">Jane</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>Wage:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="ewage">$65,000 per year</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>Email:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="eem" class="custInfo">janesmith@gmail.com</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>Phone:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="eph" >650-123-4567</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel"
+                            <span>Street:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="est" >600 Brewster</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>City:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="eci" >Redwood City</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>State:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="es">CA</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="empInfoLabel">
+                            <span>Country:</span>
+                        </td>
+                        <td class="empInfo">
+                            <span id="ec">USA</span>
+                        </td>
+                    </tr>    
+                </table>
+                
+            </div>
+            <div id="infoEditSuccessful"></div>
+            <div id="editEmployeeInfo" class="hidden">
+                <h2>Edit Employee Information</h2>
+                <p>Fields marked with <span class="required">*</span> are required.  Password must be 8 or more characters and contain at least 1 letter and 1 digit.
+                Email must be of the form emailaddress@example.com</p>
+                <span id="eRegError" class="redText"></span>
+                <div id="registerEmployee" class="register">
+                    <span class="required">*</span><label for="ePassword">Password:</label><input id="ePassword" name="epassword" class="registerSpacing" type="password"/><br/>
+                    <span class="required">*</span><label for="eFirstName">First Name:</label><input id="eFirstName" class="registerSpacing" name="efirstname" type="text"/><br/>
+                    <label for="eMiddleName">Middle Name:</label><input id="eMiddleName" class="registerSpacing" name="emiddlename" type="text"/><br/>
+                    <span class="required">*</span><label for="eLastName">Last Name:</label><input id="eLastName" class="registerSpacing" name="elastname" type="text"/><br/>
+                    <span class="required">*</span><label for="eEmail">Email:</label><input id="eEmail" class="registerSpacing" name="eemail" type="email"/><br/>
+                    <label for="ePhone">Phone:</label><input id="ePhone" class="registerSpacing" name="ephone" type="text"/><br/>
+                    <label for="eStreet">Street:</label><input id="eStreet" class="registerSpacing" name="estreet" type="text"/><br/>
+                    <label for="eCity">City:</label><input id="eCity" class="registerSpacing" name="ecity" type="text"/><br/>
+                    <label for="eState">State:</label><input id="eState" class="registerSpacing" name="estate" type="text"/><br/>
+                    <label for="eCountry">Country:</label><input id="eCountry" class="registerSpacing" name="ecountry" type="text"/><br/>
+                </div>
+                <button id="eEditInfo" class="login">Submit</button>
+            </div>
+            
+        <script type="text/javascript">
+            $("#ve").click(function(){
+                $("#viewEmployeeInfo").show();
+                $("#editEmployeeInfo").hide();
+            });
+            $("#ee").click(function(){
+                $("#editEmployeeInfo").show();
+                $("#viewEmployeeInfo").hide();
+            });
+            
+            $("#ePassword").blur(function(){
+               var pass = $("#ePassword").val();
+               var passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/;
+               if(!passwordRegEx.test(pass))
+               {
+                   $("#eRegError").text("Invalid password.").show();
+                   $(this).focus();
+               }
+               else
+               {
+                   $("#eRegError").hide();
+               }
+            });
+            $("#eFirstName").blur(function(){
+                var firstName = $(this).val();
+                var firstNameRegEx=/^[a-zA-Z ]+$/;
+                if(!firstNameRegEx.test(firstName))
+                {
+                    $("#eRegError").text("First name field is empty.").show();
+                    $(this).focus();
+                }
+                else
+                {
+                    $("#eRegError").hide();
+                }
+            });
+            $("#eLastName").blur(function(){
+                var lastName = $(this).val();
+                var lastNameRegEx=/^[a-zA-Z ]+$/;
+                if(!lastNameRegEx.test(lastName))
+                {
+                    $("#eRegError").text("Last name field is empty.").show();
+                    $(this).focus();
+                }
+                else
+                {
+                    $("#eRegError").hide();
+                }
+            });
+            
+            $("#eEmail").blur(function(){
+               var email = $(this).val();
+               var emailRegEx = /([\w\-]+\@[\w\-]+\.[\w\-]+)/;
+               if(!emailRegEx.test(email))
+               {
+                    $("#eRegError").text("Invalid email address.").show();
+                    $(this).focus();
+               }
+               else
+                {
+                    $("#eRegError").hide();
+                }
+            });
+            $("#eEditInfo").click(function(){
+                
+                var pass = $("#ePassword").val();
+                var passwordRegEx = /^(?=.*\a)(?=.*\d).{8,}/;
+                var firstName = $("#eFirstName").val();
+                var firstNameRegEx=/^[a-zA-Z ]+$/;
+                var lastName = $("#eLastName").val();
+                var lastNameRegEx=/^[a-zA-Z ]+$/;
+                var email = $("#eEmail").val();
+                var emailRegEx = /([\w\-]+\@[\w\-]+\.[\w\-]+)/;
+                
+                if(!passwordRegEx.test(pass))
+                {
+                    $("#eRegError").text("Invalid password.").show();
+                    $("#ePassword").focus();
+                }
+                else if(!firstNameRegEx.test(firstName))
+                {
+                    $("#eRegError").text("First name field is empty.").show();
+                    $(this).focus();
+                }
+                else if(!lastNameRegEx.test(lastName))
+                {
+                    $("#eRegError").text("Last name field is empty.").show();
+                    $(this).focus();
+                }
+                else if(!emailRegEx.test(email))
+                {
+                    $("#eRegError").text("Invalid email address.").show();
+                    $(this).focus();
+                }
+                $("#eUName, #ePassword, #eFirstName, #eMiddleName, #eLastName, #eBirthday, #eEmail, #eCity, #eState, #eCountry").val("");
+                $("#infoEditSuccessful").text("Information edited successfully.").show();
+                $("#editEmployeeInfo").hide();
+            });
+        
+        </script>
+</body>
+</html>

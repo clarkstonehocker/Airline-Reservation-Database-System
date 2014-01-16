@@ -1,0 +1,775 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+    <title>Passenger Dashboard</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+    <style>
+        body
+        {
+            background-image: url("http://blog.heartland.org/wp-content/uploads/2013/08/Boeing-787-Dreamliner1-1.jpg");
+            background-size: cover;
+        }
+        #main
+        {
+            width: 1050px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            font-size: 14pt;
+        }
+        #header
+        {
+            text-align: center;
+            position: relative;
+            padding-bottom: 1px;
+        }
+        #userLogout
+        {
+            text-decoration: none;
+            color: #000;
+        }
+        #userLogout:hover
+        {
+            color: #888;
+        }
+        #menu
+        {
+            text-align: center;
+        }
+        .menuOption
+        {
+            display: inline;
+            border: 1px solid #000;
+            padding: 10px;
+            background-color: #1975FF;
+            border-radius: 5px;
+            color: #FFF;
+        }
+        .menuOption:hover
+        {
+            background-color: #4791FF;
+            cursor: pointer;
+            color: #000;
+        }
+        #menuItems
+        {
+            list-style: none;
+            padding: 0;
+        }
+        #welcome
+        {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        #userLogout
+        {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 14pt;
+        }
+        #contentArea
+        {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .required
+        {
+            font-style: bold;
+            color: #FF0000;
+            margin-right: 5px;
+        }
+        .registerSpacing
+        {
+            margin: 5px;
+        }
+        .login
+        {
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #1975FF;
+            margin-top: 10px;
+        }
+        .searchButton
+        {
+            padding: 4px;
+            font-size: 14px;
+            border-radius: 5px;
+            background-color: #228B22;
+        }
+        .searchButton:hover
+        {
+            background-color: #32CD32;
+        }
+        .reserve
+        {
+            padding: 4px;
+            font-size: 15px;
+            border-radius: 5px;
+            background-color: #228B22;
+            margin-top: 10px;
+        }
+        .reserve:hover
+        {
+            background-color: #32CD32;
+        }
+        .cancelReservation
+        {
+            padding: 4px;
+            font-size: 15px;
+            border-radius: 5px;
+            background-color: #6495ED;
+        }
+        .cancelReservation:hover
+        {
+            background-color: #87CEFA;
+        }
+        button
+        {
+            font-size: 16px;
+            color: #FFF;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        .login:hover{
+            background-color: #4791FF;
+        }
+        #registerPassenger
+        {
+            width: 300px;
+            margin: auto;
+            text-align: right;
+        }
+        .hidden
+        {
+            display: none;
+        }
+        .custInfo
+        {
+            text-align: left;
+            padding: 5px;
+        }
+        .custInfoLabel
+        {
+            text-align: right;
+            padding: 5px;
+        }
+        table#pinfo
+        {
+            margin: auto;
+        }
+        .shortInput
+        {
+            width: 70px;
+        }
+        .shortDateInput
+        {
+            width: 135px;
+        }
+        .center
+        {
+            margin: auto;
+        }
+        .bold
+        {
+            font-weight: bold;
+        }
+        .tableBorder
+        {
+            border: 1px solid #000;
+        }
+        .flightSearchResults
+        {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .flightSearchResults td
+        {
+            padding: 5px;
+            border: 1px solid #000;
+        }
+        .textAlignLeft
+        {
+            text-align: left;
+        }
+        .textAlignRight
+        {
+            text-align: right;
+        }
+        #departFlightsLabel, #returnFlightsLabel
+        {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        #roundTripDepartures, #roundTripReturns
+        {
+            margin-top: 5px;
+        }
+        .paddingLeft10
+        {
+            padding-left: 10px;
+        }
+        .redText
+        {
+            color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="center">
+        <div id="header">
+            <h1>Passenger Dashboard</h1>
+            <div id="welcome">
+                <span>Welcome, </span>
+                <span id="userName">Clark</span>
+            </div>
+            <div id="logout">
+                <a id="userLogout" href="Main Login Page.html">Logout</a>
+            </div>
+        </div>
+        <div id="menu">
+            <ul id="menuItems">
+                <li class="menuOption" id="vc">View contact info</li>
+                <li class="menuOption" id="ec">Edit contact info</li>
+                <li class="menuOption" id="mr">Make a reservation</li>
+                <li class="menuOption" id="cr">Cancel a reservation</li>
+                <li class="menuOption" id="vr">View reservations</li>
+            </ul>
+        </div>
+        <div id="contentArea">
+            <div id="viewCustomerInfo" class="hidden">
+                <h2>Passenger information</h2>
+                <table id="pinfo">
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>First Name:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pfn" >Jane</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span >Middle Name:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pln" >Smith</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>Last Name:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pfn">Jane</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>Email:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pem" class="custInfo">janesmith@gmail.com</span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>Phone:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pph" >650-123-4567</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel"
+                            <span>Street:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pst" >600 Brewster</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>City:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pc" >Redwood City</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>State:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="ps">CA</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="custInfoLabel">
+                            <span>Country:</span>
+                        </td>
+                        <td class="custInfo">
+                            <span id="pc">USA</span>
+                        </td>
+                    </tr>    
+                </table>
+                
+            </div>
+            <div id="infoEditSuccessful"></div>
+            <div id="editPassengerInfo" class="hidden">
+                <h2>Edit Passenger Information</h2>
+                <p>Fields marked with <span class="required">*</span> are required.  Password must be 8 or more characters and contain at least 1 letter and 1 digit.</p>
+                <span id="pRegError" class="redText"></span>
+                <br/>
+                <div id="registerPassenger" class="register">
+                    <span class="required">*</span><label for="pPassword">Password:</label><input id="pPassword" name="ppassword" class="registerSpacing" type="password"/><br/>
+                    <span class="required">*</span><label for="pFirstName">First Name:</label><input id="pFirstName" class="registerSpacing" name="pfirstname" type="text"/><br/>
+                    <label for="pMiddleName">Middle Name:</label><input id="pMiddleName" class="registerSpacing" name="pmiddlename" type="text"/><br/>
+                    <span class="required">*</span><label for="pLastName">Last Name:</label><input id="pLastName" class="registerSpacing" name="plastname" type="text"/><br/>
+                    <span class="required">*</span><label for="pEmail">Email:</label><input id="pEmail" class="registerSpacing" name="pemail" type="email"/><br/>
+                    <label for="pPhone">Phone:</label><input id="pPhone" class="registerSpacing" name="pphone" type="text"/><br/>
+                    <label for="pStreet">Street:</label><input id="pStreet" class="registerSpacing" name="pstreet" type="text"/><br/>
+                    <label for="pCity">City:</label><input id="pCity" class="registerSpacing" name="pcity" type="text"/><br/>
+                    <label for="pState">State:</label><input id="pState" class="registerSpacing" name="pstate" type="text"/><br/>
+                    <label for="pCountry">Country:</label><input id="pCountry" class="registerSpacing" name="pcountry" type="text"/><br/>
+                </div>
+                <button id="pEditInfo" class="login">Submit</button>
+            </div>
+            
+            <div id="makeReservation" class="hidden">
+                <h2>Make a reservation</h2>
+                <label for="mr1way">One Way:</label><input id="mr1way" name="reservationType" value="oneWay" type="radio"/>
+                <label for="mr2way">Round trip:</label><input id="mr2way" name="reservationType" value="roundTrip" type="radio" />
+                <br/>
+                <br/>
+                <div id="oneWaySearch" class="hidden">
+                    <label for="d1Select">Departure: </label><input type="text" id="d1Select" name="departureAirportCode" />
+                    <label for="a1Select">Arrival: </label><input type="text" id="a1Select" name="arrivalAirportCode" />
+                    <label for="seatClass1">Seat Class: </label><select id="seatClass1">
+                        <option name="seatClass" value="B">Business</option>
+                        <option name="seatClass" value="E">Economy</option>
+                        <option name="seatClass" value="F">First</option>
+                    </select>        
+                    <label for="resDate1">Date:</label><input id="resDate1" type="date" name="reservationDate" />
+                    <button class="searchButton" id="searchFlights1">Search</button>
+                    <div id="oneWayFlights" class="hidden">
+                        <table id="oneWayResults" class="flightSearchResults center tableBorder">
+                            <tr class="bold">
+                                <td>Airline</td><td>Flight #</td><td>Depart Time</td><td>Arrive Time</td><td>Price</td><td># of Seats</td><td>Select</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                        </table>
+                        <div id="reserveOneWay" class="center textAlignRight" >
+                            <button id="reserve1Way" class="reserve">Reserve Flight</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="roundTripSearch" class="hidden">
+                    <label for="dSelect2">Departure: </label><input type="text" id="dSelect2" class="shortInput" name="departureAirportCode" />
+                    <label for="aSelect2">Arrival: </label><input type="text" id="aSelect2" class="shortInput" name="arrivalAirportCode" />
+                    <label for="seatClass2">Seat Class: </label><select id="seatClass2">
+                        <option name="seatClass" value="B">Business</option>
+                        <option name="seatClass" value="E">Economy</option>
+                        <option name="seatClass" value="F">First</option>
+                    </select>        
+                    <label for="resDate2">Depart Date:</label><input id="resDate2" type="date" class="shortDateInput" name="reservationDate" />
+                    <label for="resDate3">Return Date:</label><input id="resDate3" type="date" class="shortDateInput" name="returnReservationDate" />
+                    <button class="searchButton" id="searchFlights2">Search</button>
+                    <div id="roundTripFlights" class="hidden">
+                        <div id="departFlightsLabel" class="textAlignLeft center">Departing flights:</div>
+                        <table id="roundTripDepartures" class="flightSearchResults center tableBorder">
+                            <tr class="bold">
+                                <td>Airline</td><td>Flight #</td><td>Depart Time</td><td>Arrive Time</td><td>Price</td><td># of Seats</td><td>Select</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                        </table>
+                        <div id="returnFlightsLabel" class="textAlignLeft center">Return flights:</div>
+                        <table id="roundTripReturns" class="flightSearchResults center tableBorder">
+                            <tr class="bold">
+                                <td>Airline</td><td>Flight #</td><td>Depart Time</td><td>Arrive Time</td><td>Price</td><td># of Seats</td><td>Select</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                            <tr>
+                                <td>United Airlines</td><td>UA858</td><td>13:20:00</td><td>15:25:00</td><td>600.5</td><td>19</td><td><input type="radio" name="flightSelected"</td>
+                            </tr>
+                        </table>
+                        <div id="reserveRoundTrip" class ="center textAlignRight" >
+                            <button id="reserve2Way" class="reserve">Reserve Flights</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div id="1WayReservationSuccessful" class="hidden">
+                    <p>Reservation made successfully for <span id="passengerName1Way">Jing Huang</span> </p>
+                    <table class="center flightSearchResults">
+                        <tr class="bold">
+                            <td>Reservation<br/>Number</td>
+                            <td>Flight<br/>Number</td>
+                            <td>Airline</td>
+                            <td>Departure<br/>Date</td>
+                            <td>Departure<br/>Place</td>
+                            <td>Departure<br/>Time</td>
+                            <td>Arrival<br/>Place</td>
+                            <td>Arrival<br/>Time</td>
+                            <td>Seat<br/>Class</td>
+                            <td>Price</td>
+                        </tr>
+                        <tr>
+                            <td>Res. #</td>
+                            <td>UA857</td>
+                            <td>United Airlines</td>
+                            <td>11/1/2008</td>
+                            <td>San Francisco (SFO)</td>
+                            <td>13:20</td>
+                            <td>Pu Dong Shanghai (PVG)</td>
+                            <td>15:25</td>
+                            <td>Economy</td>
+                            <td>$600</td>
+                        </tr>
+                    </table>
+                </div>
+            
+            <div id="2WayReservationSuccessful" class="hidden">
+                    <p>Reservations made successfully for<span id="passengerName">Jing Huang</span></p>
+                    <span class="bold">Departure trip:</span>
+                    <br/>
+                    <table class="center flightSearchResults">
+                        <tr class="bold">
+                            <td>Reservation<br/>Number</td>
+                            <td>Flight<br/>Number</td>
+                            <td>Airline</td>
+                            <td>Departure<br/>Date</td>
+                            <td>Departure<br/>Place</td>
+                            <td>Departure<br/>Time</td>
+                            <td>Arrival<br/>Place</td>
+                            <td>Arrival<br/>Time</td>
+                            <td>Seat<br/>Class</td>
+                            <td>Price</td>
+                        </tr>
+                        <tr>
+                            <td>Res. #</td>
+                            <td>UA857</td>
+                            <td>United Airlines</td>
+                            <td>11/1/2008</td>
+                            <td>San Francisco (SFO)</td>
+                            <td>13:20</td>
+                            <td>Pu Dong Shanghai (PVG)</td>
+                            <td>15:25</td>
+                            <td>Economy</td>
+                            <td>$600</td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <span class="bold">Return trip:</span>
+                    <br/>
+                    <table class="center flightSearchResults">
+                        <tr class="bold">
+                            <td>Reservation<br/>Number</td>
+                            <td>Flight<br/>Number</td>
+                            <td>Airline</td>
+                            <td>Departure<br/>Date</td>
+                            <td>Departure<br/>Place</td>
+                            <td>Departure<br/>Time</td>
+                            <td>Arrival<br/>Place</td>
+                            <td>Arrival<br/>Time</td>
+                            <td>Seat<br/>Class</td>
+                            <td>Price</td>
+                        </tr>
+                        <tr>
+                            <td>Res. #</td>
+                            <td>UA858</td>
+                            <td>United Airlines</td>
+                            <td>11/10/2008</td>
+                            <td>Pu Dong Shanghai (PVG)</td>
+                            <td>13:45</td>
+                            <td>San Francisco (SFO)</td>
+                            <td>9:35</td>
+                            <td>Economy</td>
+                            <td>$600</td>
+                        </tr>
+                    </table>
+                </div>
+            <div id="cancelSuccessful"></div>
+            <div id="cancelReservation" class="hidden">
+                <h2>Cancel a reservation</h2>
+                <label for="cr1way">One Way:</label><input id="cr1way" name="cancelType" type="radio"/>
+                <label for="cr2way">Round trip:</label><input id="cr2way" name="cancelType" type="radio" />
+                <br/>
+                <div id="cancelOneWay" class="center">
+                    <p>Enter a reservation number to cancel:</p>
+                    <label for="resNumber">Reservation number: </label><input type="text" id="resNumber" name="reservationNumber"/>
+                    <button class="cancelReservation" id="cancelRes">Cancel Reservation</button>
+                </div>
+                <div id="cancelRoundTrip">
+                    <p>Enter Reservation numbers to cancel:</p>
+                    <label for="resNum1Way">Depart Reservation Number: </label><input type="text" id="resNum1Way" name="departReservationNumber" /><button id="cancelDepart" class="cancelReservation">Cancel reservation</button> 
+                    <br/>
+                    <br/>
+                    <label for="resNum2way">Retrun Reservation Number: </label><input type="text" id="resNum2way" name="returnReservationNumber" /><button id="cancelReturn" class="cancelReservation">Cancel reservation</button> 
+                </div>
+             </div>
+            <div id="viewReservations" class="hidden">
+                <h2>View Reservations</h2>
+                <table class="center flightSearchResults">
+                    <tr class="bold">
+                        <td>Reservation<br/>Number</td>
+                        <td>Flight<br/>Number</td>
+                        <td>Airline</td>
+                        <td>Departure<br/>Date</td>
+                        <td>Departure<br/>Place</td>
+                        <td>Departure<br/>Time</td>
+                        <td>Arrival<br/>Place</td>
+                        <td>Arrival<br/>Time</td>
+                        <td>Seat<br/>Class</td>
+                        <td>Price</td>
+                    </tr>
+                    <tr>
+                        <td>Res. #</td>
+                        <td>UA858</td>
+                        <td>United Airlines</td>
+                        <td>11/1/2008</td>
+                        <td>San Francisco (SFO)</td>
+                        <td>13:20</td>
+                        <td>Pu Dong Shanghai (PVG)</td>
+                        <td>15:25</td>
+                        <td>Economy</td>
+                        <td>$600</td>
+                    </tr>
+                    <tr>
+                        <td>Res. #</td>
+                        <td>UA858</td>
+                        <td>United Airlines</td>
+                        <td>11/1/2008</td>
+                        <td>San Francisco (SFO)</td>
+                        <td>13:20</td>
+                        <td>Pu Dong Shanghai (PVG)</td>
+                        <td>15:25</td>
+                        <td>Economy</td>
+                        <td>$600</td>
+                    </tr>
+                    <tr>
+                        <td>Res. #</td>
+                        <td>UA858</td>
+                        <td>United Airlines</td>
+                        <td>11/1/2008</td>
+                        <td>San Francisco (SFO)</td>
+                        <td>13:20</td>
+                        <td>Pu Dong Shanghai (PVG)</td>
+                        <td>15:25</td>
+                        <td>Economy</td>
+                        <td>$600</td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+        </div>
+        <script type="text/javascript">
+            $("#vc").click(function(){
+                $("#viewCustomerInfo").show();
+                $("#editPassengerInfo").hide();
+                $("#makeReservation").hide();
+                $("#cancelReservation").hide();
+                $("#viewReservations").hide();
+                $("#infoEditSuccessful, #cancelSuccessful, #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#ec").click(function(){
+                $("#editPassengerInfo").show();
+                $("#viewCustomerInfo").hide();
+                $("#makeReservation").hide();
+                $("#cancelReservation").hide();
+                $("#viewReservations").hide();
+                $("#infoEditSuccessful").hide();
+                $("#infoEditSuccessful, #cancelSuccessful, #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#mr").click(function(){
+                $("#viewCustomerInfo").hide();
+                $("#editPassengerInfo").hide();
+                $("#makeReservation").show();
+                $("#cancelReservation").hide();
+                $("#viewReservations").hide();
+                $("#reservationSuccessful, #oneWaySearch, #roundTripSearch").hide();
+                $("#mr1way, #mr2way").attr('checked', false);
+                $("#infoEditSuccessful, #cancelSuccessful, #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#cr").click(function(){
+                $("#viewCustomerInfo").hide();
+                $("#editPassengerInfo").hide();
+                $("#makeReservation").hide();
+                $("#cancelReservation").show();
+                $("#viewReservations").hide();
+                $("#cancelSuccessful, #cancelOneWay, #cancelRoundTrip").hide();
+                $("#cr1way, #cr2way").attr('checked', false);
+                $("#infoEditSuccessful, #cancelSuccessful, #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#vr").click(function(){
+                $("#viewCustomerInfo").hide();
+                $("#editPassengerInfo").hide();
+                $("#makeReservation").hide();
+                $("#cancelReservation").hide();
+                $("#viewReservations").show();
+                $("#infoEditSuccessful, #cancelSuccessful, #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#mr1way").change(function(){
+                $("#roundTripSearch").hide();
+                $("#oneWaySearch").show();
+                $("#oneWayFlights, #roundTripFlights #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#mr2way").change(function(){
+                $("#oneWaySearch").hide();
+                $("#roundTripSearch").show();
+                $("#oneWayFlights, #roundTripFlights, #1WayReservationSuccessful, #2WayReservationSuccessful").hide();
+            });
+            $("#searchFlights1").click(function(){
+                $("#oneWayFlights").show();
+                var width = $("#oneWayResults").width();
+                $("#reserveOneWay").width(width);
+            });
+            $("#searchFlights2").click(function(){
+                $("#roundTripFlights").show();
+                var width = $("#roundTripReturns").width();
+                $("#reserveRoundTrip, #departFlightsLabel, #returnFlightsLabel").width(width);
+            });
+            
+            $("#cr1way").change(function(){
+                $("#cancelOneWay").show();
+                $("#cancelRoundTrip").hide();
+            });
+            $("#cr2way").change(function(){
+                $("#cancelRoundTrip").show();
+                $("#cancelOneWay").hide();
+            });
+            $(".cancelReservation").click(function(){
+                $("#cancelSuccessful").text("Reservation canceled successfully.").show();
+                $("#cancelReservation").hide();
+            });
+            $("#reserve1Way").click(function(){
+                $("#1WayReservationSuccessful").show();
+                $("#makeReservation").hide();
+            });
+            $("#reserve2Way").click(function(){
+               $("#2WayReservationSuccessful").show();
+               $("#makeReservation").hide();
+            });
+        
+            $("#pPassword").blur(function(){
+                var pass = $("#pPassword").val();
+                var passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/;
+                if(!passwordRegEx.test(pass))
+                {
+                    $("#pRegError").text("Invalid or empty password.").show();
+                    $(this).focus();
+                }
+                else
+                {
+                    $("#pRegError").hide();
+                }
+            });
+            $("#pFirstName").blur(function(){
+                var firstName = $(this).val();
+                var firstNameRegEx=/^[a-zA-Z ]+$/;
+                if(!firstNameRegEx.test(firstName))
+                {
+                    $("#pRegError").text("First name field is empty.").show();
+                    $(this).focus();
+                }
+                else
+                {
+                    $("#pRegError").hide();
+                }
+            });
+            $("#pLastName").blur(function(){
+                var lastName = $(this).val();
+                var lastNameRegEx=/^[a-zA-Z ]+$/;
+                if(!lastNameRegEx.test(lastName))
+                {
+                    $("#pRegError").text("Last name field is empty.").show();
+                    $(this).focus();
+                }
+                else
+                {
+                    $("#pRegError").hide();
+                }
+            });
+            $("#pEmail").blur(function(){
+               var email = $(this).val();
+               var emailRegEx = /([\w\-]+\@[\w\-]+\.[\w\-]+)/;
+               if(!emailRegEx.test(email))
+               {
+                    $("#pRegError").text("Invalid email address.").show();
+                    $(this).focus();
+               }
+               else
+                {
+                    $("#pRegError").hide();
+                }
+            });
+            $("#pEditInfo").click(function(){
+                
+                var pass = $("#pPassword").val();
+                var passwordRegEx = /^(?=.*\a)(?=.*\d).{8,}/;
+                var firstName = $("#pFirstName").val();
+                var firstNameRegEx=/^[a-zA-Z ]+$/;
+                var lastName = $("#pLastName").val();
+                var lastNameRegEx=/^[a-zA-Z ]+$/;
+                var email = $("#pEmail").val();
+                var emailRegEx = /([\w\-]+\@[\w\-]+\.[\w\-]+)/;
+                
+                if(!passwordRegEx.test(pass))
+                {
+                    $("#pRegError").text("Invalid password.").show();
+                    $("#pPassword").focus();
+                }
+                else if(!firstNameRegEx.test(firstName))
+                {
+                    $("#pRegError").text("First name field is empty.").show();
+                    $(this).focus();
+                }
+                else if(!lastNameRegEx.test(lastName))
+                {
+                    $("#pRegError").text("Last name field is empty.").show();
+                    $(this).focus();
+                }
+                else if(!emailRegEx.test(email))
+                {
+                    $("#pRegError").text("Invalid email address.").show();
+                    $(this).focus();
+                }
+                $("#pPassword, #pFirstName, #pMiddleName, #pLastName, #pEmail, #pCity, #pState, #pCountry").val("");
+                
+                $("#infoEditSuccessful").text("Information edited successfully.").show();
+                $("#editPassengerInfo").hide();
+                
+            });
+        </script>
+    </div>
+</body>
+</html>
